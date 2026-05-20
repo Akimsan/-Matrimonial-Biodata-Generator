@@ -19,10 +19,10 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/biodata', biodataRoutes);
 app.use('/api/auth', authRoutes);
 
+// Start Server
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => {
-    console.log('✅ MongoDB connected');
-    app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
-  })
+  .then(() => console.log('✅ MongoDB connected'))
   .catch(err => console.error('❌ MongoDB connection error:', err));
