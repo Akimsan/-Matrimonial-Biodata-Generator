@@ -4,7 +4,7 @@ import BiodataForm from './BiodataForm';
 import HoroscopeUpload from './HoroscopeUpload';
 
 const BiodataCard = forwardRef(function BiodataCard(
-  { formData, profileImage, horoscopeImage, onFormChange, onProfileChange, onHoroscopeChange },
+  { formData, profileImage, horoscopeImage, onFormChange, onProfileChange, onHoroscopeChange, isExporting },
   ref
 ) {
   return (
@@ -26,7 +26,7 @@ const BiodataCard = forwardRef(function BiodataCard(
       <div className="card-body">
 
         {/* LEFT: Profile Photo */}
-        <PhotoUpload image={profileImage} onImageChange={onProfileChange} />
+        <PhotoUpload image={profileImage} onImageChange={onProfileChange} isExporting={isExporting} />
 
         {/* DIVIDER */}
         <div className="col-divider" />
@@ -41,7 +41,7 @@ const BiodataCard = forwardRef(function BiodataCard(
         <div className="col-divider" />
 
         {/* RIGHT: Horoscope */}
-        <HoroscopeUpload image={horoscopeImage} onImageChange={onHoroscopeChange} />
+        <HoroscopeUpload image={horoscopeImage} onImageChange={onHoroscopeChange} isExporting={isExporting} />
 
       </div>
     </div>

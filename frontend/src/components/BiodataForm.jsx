@@ -37,7 +37,22 @@ export default function BiodataForm({ formData, onChange }) {
               type={name === 'contact' ? 'tel' : 'text'}
               value={formData[name] || ''}
               placeholder={placeholder}
-              onChange={(name === 'contact') ? (e) => onChange(name, e.target.value.replace(/\D/g,'')) : (e) => onChange(name, e.target.value)}
+              onChange={(e) => {
+                if (name === 'contact') {
+                  // Strip non-digits, cap at 10
+                  const digits = e.target.value.replace(/\D/g, '').slice(0, 10);
+                  // Format: 077 206 8715  (3-3-4)
+                  let formatted = digits;
+                  if (digits.length > 6) {
+                    formatted = `${digits.slice(0, 3)} ${digits.slice(3, 6)} ${digits.slice(6)}`;
+                  } else if (digits.length > 3) {
+                    formatted = `${digits.slice(0, 3)} ${digits.slice(3)}`;
+                  }
+                  onChange(name, formatted);
+                } else {
+                  onChange(name, e.target.value);
+                }
+              }}
             />
           )}
         </div>

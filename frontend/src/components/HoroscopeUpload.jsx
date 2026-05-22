@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 
-export default function HoroscopeUpload({ image, onImageChange }) {
+export default function HoroscopeUpload({ image, onImageChange, isExporting }) {
   const inputRef = useRef();
   const [dragging, setDragging] = useState(false);
 
@@ -39,18 +39,20 @@ export default function HoroscopeUpload({ image, onImageChange }) {
         )}
       </div>
 
-      <label className="upload-btn-label">
-        ✦ Choose Horoscope
-        <input
-          ref={inputRef}
-          type="file"
-          accept="image/*"
-          style={{ display: 'none' }}
-          onChange={(e) => handleFile(e.target.files[0])}
-        />
-      </label>
+      {!isExporting && (
+        <label className="upload-btn-label">
+          ✦ Choose Horoscope
+          <input
+            ref={inputRef}
+            type="file"
+            accept="image/*"
+            style={{ display: 'none' }}
+            onChange={(e) => handleFile(e.target.files[0])}
+          />
+        </label>
+      )}
 
-      {image && (
+      {image && !isExporting && (
         <button
           onClick={() => onImageChange(null, null)}
           style={{

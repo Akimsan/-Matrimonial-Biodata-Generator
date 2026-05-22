@@ -19,6 +19,7 @@ export default function App() {
   const [horoscopeImage, setHoroscopeImage] = useState(null);
   const [saving, setSaving]               = useState(false);
   const [savedMsg, setSavedMsg]           = useState('');
+  const [isExporting, setIsExporting]     = useState(false);
 
   /* ── Handlers ── */
   const handleFormChange = (name, value) =>
@@ -36,12 +37,17 @@ export default function App() {
 
   /* ── Capture helpers ── */
   const captureCanvas = async () => {
-    return await html2canvas(cardRef.current, {
+    setIsExporting(true);
+    // Wait one frame so React re-renders and hides the buttons before capture
+    await new Promise(r => setTimeout(r, 100));
+    const canvas = await html2canvas(cardRef.current, {
       scale: 2,
       useCORS: true,
       backgroundColor: '#fdf6e3',
       logging: false,
     });
+    setIsExporting(false);
+    return canvas;
   };
 
   /* ── Download as PDF ── */
@@ -135,6 +141,7 @@ export default function App() {
         onFormChange={handleFormChange}
         onProfileChange={handleProfileChange}
         onHoroscopeChange={handleHoroscopeChange}
+        isExporting={isExporting}
       />
 
       <p style={{ color: '#c9a84c', fontSize: '0.8rem', opacity: 0.7 }}>
